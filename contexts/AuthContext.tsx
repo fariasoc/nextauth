@@ -1,4 +1,4 @@
-import { createContext } from 'react'
+import { createContext, ReactNode } from 'react'
 
 type SignInCredentials = {
   email: string
@@ -10,7 +10,11 @@ type AuthContextData = {
   isAuthenticated: boolean
 }
 
-const AuthContext = createContext({} as AuthContextData )
+type AuthProviderProps = {
+  children: ReactNode
+}
+
+export const AuthContext = createContext({} as AuthContextData )
 
 export function AuthProvider({children}) {
   const isAuthenticated = false
