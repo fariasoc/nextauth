@@ -70,6 +70,8 @@ api.interceptors.response.use(response => {
 
     } else {
       // Deslogar o usuário 
+      signOut()
     }
   }
+  return Promise.reject(error)
 })
