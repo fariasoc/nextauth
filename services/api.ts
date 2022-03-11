@@ -45,7 +45,13 @@ api.interceptors.response.use(response => {
           })
   
           api.defaults.headers['Authorization'] = `Bearer ${token}`
-  
+          failedRequestQueue.forEach(request =>  request.onSuccess(token))
+          failedRequestQueue = []
+        }).catch(err => {
+          failedRequestQueue.forEach(request =>  request.onFailure(err))
+          failedRequestQueue = []
+        }).finally(() => {
+          isRefreshing = false
         })
       }
 
@@ -56,8 +62,8 @@ api.interceptors.response.use(response => {
 
             resolve(api(originalConfig))
           } ,
-          onFailure: () => {
-
+          onFailure: (err: AxiosError) => {
+            reject(err)
           }
         })
       })
