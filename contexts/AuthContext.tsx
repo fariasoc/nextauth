@@ -26,7 +26,7 @@ type AuthProviderProps = {
 
 export const AuthContext = createContext({} as AuthContextData )
 
-export function AuthProvider({children}) {
+export function AuthProvider({children}: AuthProviderProps) {
   const [user, setUser] = useState<User>()
   //const router = useRouter()
   const isAuthenticated = !!user
@@ -66,7 +66,7 @@ export function AuthProvider({children}) {
       email, 
       permisions,
       roles,
-    })~
+    })
 
     api.defaults.headers['Authorization'] = `Bearer ${token}`
 
