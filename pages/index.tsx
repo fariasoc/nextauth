@@ -4,6 +4,7 @@ import { FormEvent, useContext, useState } from 'react';
 import { AuthContext } from '../contexts/AuthContext';
 import { parseCookies } from 'nookies';
 import styles from '../styles/Home.module.css'
+import { withSSRGuest } from '../utils/withSSRGuest';
 
 export default function Home() {
   const [email, setEmail] = useState('');
@@ -30,22 +31,8 @@ export default function Home() {
   )
 }
 
-export const getServerSideProps: GetServerSideProps = async (ctx) => {
-  console.log(ctx.req.cookies)
-
-  const cookies = parseCookies()
-
-  if(!cookies['nextauth.token']) {
-    return{
-      redirect: {
-        destination: '/dashboard',
-        permanent: false,
-      }
-    }
-  }
-  
-
+export const getServerSideProps = withSSRGuest( async (ctx) => {
   return {
     props: {}
   }
-}
+})
